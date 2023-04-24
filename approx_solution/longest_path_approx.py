@@ -12,6 +12,10 @@ Example Input:
 """
 import itertools
 
+# Approximation Function for Longest Simple Path in a Directed and Weighted Graph
+def findApproxLongestPath(adj_list):
+    pass
+
 def main():
 
     # Input the number of vertices

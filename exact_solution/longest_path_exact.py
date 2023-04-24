@@ -56,13 +56,8 @@ def main():
     for i in range(numVertices):
         longestPath = max(longestPath, findLongestPath(adjlist, i))
     return longestPath
-    pass
-
-    
-    
 
 
-    pass
 if __name__ == "__main__":
     main()
 
