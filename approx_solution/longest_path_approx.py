@@ -1,7 +1,7 @@
 """
 Longest Path Problem (Approximation Solution)
 Names: Bradley Woodcock, Dylan Roth
-Date: 10/10/2019
+Date: 4/23/2023
 
 This program will find the longest path in a graph. We will be using a Directed Weighted Graph.
 The input will be the number of vertices, and the edges themselves.
