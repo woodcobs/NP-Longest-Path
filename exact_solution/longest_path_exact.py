@@ -10,10 +10,17 @@ This will be done by using a backtracking function that will find the longest pa
 We will use itertools to generate all possible permutations of the vertices, and then we will find the longest path from each permutation.
 
 Example Input:
-    4
-    0 1 1
-    0 2 2
-    0 3 3
+    8 10
+    0 1 500
+    1 2 100
+    1 3 100
+    1 4 100
+    1 5 100
+    2 6 99
+    3 6 99
+    4 6 99
+    5 6 99
+    6 7 1000
 """
 import itertools
 def findLongestPath(adjlist, start):
