@@ -19,7 +19,7 @@ Example Input:
     a b 99
 """
 import itertools
-def findLongestPath(adjlist, start):
+def findLongestPath(adjlist):
         maxLength = 0
         path = None
 
@@ -61,7 +61,7 @@ def main():
 
     # find the longest path from each vertex to every other vertex
     for i in range(numVertices):
-        longestLength, longestPath = findLongestPath(adjlist, i)
+        longestLength, longestPath = findLongestPath(adjlist)
         
     print("The longest path is: ", longestPath, " with a length of: ", longestLength)
 
