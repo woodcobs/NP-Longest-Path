@@ -11,14 +11,17 @@ We will use itertools to generate all possible permutations of the vertices, and
 
 Example Input:
     4 6
-    a c 500
-    b a 100
-    c a 100
-    b d 100
-    d b 100
-    a b 99
+    0 2 500
+    1 0 100
+    2 0 100
+    1 3 100
+    3 1 100
+    0 1 99
 """
 import itertools
+
+
+
 def findLongestPath(adjlist):
         maxLength = 0
         path = None
@@ -30,9 +33,8 @@ def findLongestPath(adjlist):
         for permutation in permutations:
             currLength = 0
             for i in range(len(permutation)-1):
-                if adjlist.get(permutation[i]):
-                    if adjlist.get(permutation[i]).get(permutation[i+1]):
-                        currLength += adjlist.get(permutation[i]).get(permutation[i+1])
+                if adjlist.get(permutation[i]) and adjlist.get(permutation[i]).get(permutation[i+1]):
+                        currLength += adjlist[permutation[i]][permutation[i+1]]
                 else:
                     currLength = 0
                     break
@@ -49,22 +51,22 @@ def main():
 
     adjlist = {}
 
-    start = 'a'
-    for _ in range(numVertices):
-        adjlist[start] = {}
-        start = chr(ord(start) + 1)
+    for i in range(numVertices):
+        adjlist[str(i)] = {}
+        
     # input the edges
-    for i in range(numEdges):
+    for _ in range(numEdges):
         u, v, w = input().split(" ")
         w = int(w)
         adjlist[u][v] = w
 
     # find the longest path from each vertex to every other vertex
-    for i in range(numVertices):
-        longestLength, longestPath = findLongestPath(adjlist)
+    longestLength, longestPath = findLongestPath(adjlist)
         
-    print("The longest path is: ", longestPath, " with a length of: ", longestLength)
+    print(longestLength)
+    print(" ".join(longestPath))
 
 
 if __name__ == "__main__":
     main()
+
