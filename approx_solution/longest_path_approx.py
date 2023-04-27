@@ -32,9 +32,13 @@ def main():
     
     # input the edges
     for i in range(numEdges):
-        u, v, w = map(int, input().split())
+        u, v, w = map(int, input().split(" "))
         adjlist[u][v] = w
     
+    # output the longest path HERE
+
+    #print(longestLength)
+    #print(" ".join(longestPath))
 
 
     pass
