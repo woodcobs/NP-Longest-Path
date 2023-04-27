@@ -19,7 +19,16 @@ import itertools
 
 # Approximation Function for Longest Simple Path in a Directed and Weighted Graph
 def findApproxLongestPath(adj_list):
-    pass
+    maxLength = -9999999
+
+def DFS(v, adj_list):
+
+    visited = set()
+
+    visited.add(v)
+
+
+
 
 def main():
 
