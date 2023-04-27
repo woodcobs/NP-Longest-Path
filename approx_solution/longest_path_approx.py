@@ -32,7 +32,7 @@ def main():
     
     # input the edges
     for i in range(numEdges):
-        u, v, w = map(int, input().split())
+        u, v, w = map(int, input().split(" "))
         adjlist[u][v] = w
     
 
