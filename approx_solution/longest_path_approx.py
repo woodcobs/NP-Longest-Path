@@ -35,6 +35,10 @@ def main():
         u, v, w = map(int, input().split(" "))
         adjlist[u][v] = w
     
+    # output the longest path HERE
+
+    #print(longestLength)
+    #print(" ".join(longestPath))
 
 
     pass
