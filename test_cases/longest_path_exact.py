@@ -17,13 +17,22 @@ Example Input:
     1 3 100
     3 1 100
     0 1 99
+
+
+    4 6
+0 2 500
+1 0 100
+2 0 100
+1 3 100
+3 1 100
+0 1 99
 """
 import itertools
 
 
 
 def findLongestPath(adjlist):
-        maxLength = 0
+        maxLength = -9999999999999
         path = None
 
         # find all permutations of the vertices
@@ -44,10 +53,11 @@ def findLongestPath(adjlist):
         return maxLength, path
             
 
-def main():
+def main(numVertices = None, numEdges = None, testEdges = None):
 
     # Input the number of vertices
-    numVertices, numEdges = map(int, input().split(" ")) 
+    if not (numVertices and numEdges):
+        numVertices, numEdges = map(int, input().split(" "))         
 
     adjlist = {}
 
@@ -55,14 +65,19 @@ def main():
         adjlist[str(i)] = {}
         
     # input the edges
-    for _ in range(numEdges):
-        u, v, w = input().split(" ")
-        w = int(w)
-        adjlist[u][v] = w
+    if not testEdges:
+        for _ in range(numEdges):
+            u, v, w = input().split(" ")
+            w = int(w)
+            adjlist[u][v] = w
+    else:
+        for edge in testEdges:
+            u, v, w = edge
+            adjlist[u][v] = int(w)
 
+    print(adjlist)
     # find the longest path from each vertex to every other vertex
     longestLength, longestPath = findLongestPath(adjlist)
-        
     print(longestLength)
     print(" ".join(longestPath))
 

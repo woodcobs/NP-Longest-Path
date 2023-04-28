@@ -18,18 +18,21 @@ Example Input:
 import queue
 
 # Approximation Function for Longest Simple Path in a Directed and Weighted Graph
-def findApproxLongestPath(adjList):
+def findApproxLongestPath(adjList, numVertices):
     paths = []
     for v in adjList.keys():
-        paths.append(DFS(adjList, v))
-    longestLen = max([len(p) for p in paths])
+        currPath, currLength = DFS(adjList, v)
+        paths.append([currPath, currLength])
+    maxLen = -9999999999999
+    maxPath = None
+    for p, l in paths:
+        if len(p) == numVertices and l > maxLen:
+            maxLen = l
+            maxPath = p
     longestPath = []
-    for p in paths:
-        if len(p) == longestLen:
-            longestPath = p
-            break
-    print(longestLen)
-    print(" ".join(longestPath))
+    
+    print(maxLen)
+    print(" ".join(maxPath))
 
 
 def DFS(adjList, s):
@@ -39,12 +42,13 @@ def DFS(adjList, s):
     q.put(s)
     while q.empty() != True:
         v = q.get()
-        if v not in visited:
+        if v not in visited and adjList.get(v):
             visited.append(v)
-            pathLength += adjList[v][1]
-            for nei, _ in adjList[v]:
+            print(adjList[v])
+            pathLength += int(adjList[v][1])
+            for nei in adjList[v]:
                 q.put(nei)
-    return visited
+    return visited, pathLength
 
 
 def main():
@@ -54,15 +58,16 @@ def main():
 
     adjList = {}
     for i in range(numVertices):
-        adjList[i] = {}
+        adjList[str(i)] = {}
     
     # input the edges
     for _ in range(numEdges):
         u, v, w = map(int, input().split(" "))
-        adjList[u].append([v, w])
+        u = str(u)
+        adjList[u] = ([str(v), str(w)])
     
     # output the longest path HERE
-    findApproxLongestPath(adjList)
+    findApproxLongestPath(adjList, numVertices)
 
 
 if __name__ == "__main__":
