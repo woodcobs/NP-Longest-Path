@@ -59,7 +59,7 @@ def main():
 
     adjList = {}
     for i in range(numVertices):
-        adjList[i] = {}
+        adjList[i] = []
     
     # input the edges
     for _ in range(numEdges):
