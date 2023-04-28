@@ -7,6 +7,7 @@ This is a test program to test longest_path_exact.py.
 import random
 import time
 
+
 from longest_path_exact import main as findLongestPathMain
 
 
@@ -26,25 +27,11 @@ def main():
 
         u = node1
         v = node2
-        w = str(random.randint(1, 10))
+        w = str(random.randint(-10, 10))
         edges.append((u, v, w))
 
 
-    # if any nodes are missing an edge, add one
-    for i in range(numVertices):
-        if not any([edge[0] == str(i) or edge[1] == str(i) for edge in edges]):
-            node1 = str(i)
-            node2 = str(random.randint(0, numVertices-1))
-
-            # make sure the node doesnt point to itself
-            while node1 == node2:
-                node2 = str(random.randint(1, numVertices-1))
-
-            u = node1
-            v = node2
-            w = str(random.randint(1, 10))
-            edges.append((u, v, w))
-
+    
     for edge in edges:
         print(edge[0], edge[1], edge[2])
     # print the edges   

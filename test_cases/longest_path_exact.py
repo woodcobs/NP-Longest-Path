@@ -41,15 +41,19 @@ def findLongestPath(adjlist):
         # find the longest path from each permutation
         for permutation in permutations:
             currLength = 0
+            currPath = []
+            currPath.append(permutation[0])
             for i in range(len(permutation)-1):
                 if adjlist.get(permutation[i]) and adjlist.get(permutation[i]).get(permutation[i+1]):
                         currLength += adjlist[permutation[i]][permutation[i+1]]
+                        if currPath[-1] != permutation[i]:
+                            currPath.append(permutation[i])
+                        currPath.append(permutation[i + 1])
                 else:
-                    currLength = 0
-                    break
+                     break
             if currLength > maxLength:
                 maxLength = currLength
-                path = permutation
+                path = currPath
         return maxLength, path
             
 
@@ -58,8 +62,6 @@ def main(numVertices = None, numEdges = None, testEdges = None):
     # Input the number of vertices
     if not (numVertices and numEdges):
         numVertices, numEdges = map(int, input().split(" ")) 
-    else:
-        print("Variables were passed in as ", numVertices, testEdges)
 
     adjlist = {}
 
