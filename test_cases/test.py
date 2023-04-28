@@ -45,6 +45,8 @@ def main():
             w = str(random.randint(1, 10))
             edges.append((u, v, w))
 
+    for edge in edges:
+        print(edge[0], edge[1], edge[2])
     # print the edges   
     start = time.time()
     findLongestPathMain(numVertices, numEdges, edges)

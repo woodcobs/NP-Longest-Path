@@ -46,8 +46,11 @@ def DFS(adjList, s):
             visited.append(v)
             print(adjList[v])
             pathLength += int(adjList[v][1])
+            print("adding", int(adjList[v][1]))
             for nei in adjList[v]:
                 q.put(nei)
+    print("length", pathLength, visited )
+    print()
     return visited, pathLength
 
 

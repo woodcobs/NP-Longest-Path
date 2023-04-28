@@ -32,7 +32,7 @@ import itertools
 
 
 def findLongestPath(adjlist):
-        maxLength = -9999999999999
+        maxLength = 0
         path = None
 
         # find all permutations of the vertices
@@ -57,7 +57,9 @@ def main(numVertices = None, numEdges = None, testEdges = None):
 
     # Input the number of vertices
     if not (numVertices and numEdges):
-        numVertices, numEdges = map(int, input().split(" "))         
+        numVertices, numEdges = map(int, input().split(" ")) 
+    else:
+        print("Variables were passed in as ", numVertices, testEdges)
 
     adjlist = {}
 
@@ -78,8 +80,11 @@ def main(numVertices = None, numEdges = None, testEdges = None):
     print(adjlist)
     # find the longest path from each vertex to every other vertex
     longestLength, longestPath = findLongestPath(adjlist)
-    print(longestLength)
-    print(" ".join(longestPath))
+    if longestLength and longestPath:
+        print(longestLength)
+        print(" ".join(longestPath))
+    else:
+        print("No path to all vertices found")
 
 
 if __name__ == "__main__":
