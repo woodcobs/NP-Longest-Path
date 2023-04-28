@@ -20,9 +20,14 @@ import queue
 # Approximation Function for Longest Simple Path in a Directed and Weighted Graph
 def findApproxLongestPath(adjList):
     paths = []
+    #longestLen = -99999
     for v in adjList.keys():
+        #visited, pathLength = DFS(adjList, v)
+        #paths.append(visited)
         paths.append(DFS(adjList, v))
+        #longestLen = max(longestLen, pathLength)
     longestLen = max([len(p) for p in paths])
+    # longestLen = pathLength
     longestPath = []
     for p in paths:
         if len(p) == longestLen:
@@ -34,17 +39,17 @@ def findApproxLongestPath(adjList):
 
 def DFS(adjList, s):
     visited = []
-    pathLength = 0
+    #pathLength = 0
     q = queue.LifoQueue()
     q.put(s)
     while q.empty() != True:
         v = q.get()
         if v not in visited:
             visited.append(v)
-            pathLength += adjList[v][1]
+            #pathLength += adjList[v][1]
             for nei, _ in adjList[v]:
                 q.put(nei)
-    return visited
+    return visited #, pathLength
 
 
 def main():
