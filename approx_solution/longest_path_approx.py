@@ -15,19 +15,36 @@ Example Input:
     d b 100
     a b 99
 """
-import itertools
+import queue
 
 # Approximation Function for Longest Simple Path in a Directed and Weighted Graph
-def findApproxLongestPath(adj_list):
-    maxLength = -9999999
+def findApproxLongestPath(adjList):
+    paths = []
+    for v in adjList.keys():
+        paths.append(DFS(adjList, v))
+    longestLen = max([len(p) for p in paths])
+    longestPath = []
+    for p in paths:
+        if len(p) == longestLen:
+            longestPath = p
+            break
+    print(longestLen)
+    print(" ".join(longestPath))
 
-def DFS(v, adj_list):
 
-    visited = set()
-
-    visited.add(v)
-
-
+def DFS(adjList, s):
+    visited = []
+    pathLength = 0
+    q = queue.LifoQueue()
+    q.put(s)
+    while q.empty() != True:
+        v = q.get()
+        if v not in visited:
+            visited.append(v)
+            pathLength += adjList[v][1]
+            for nei, _ in adjList[v]:
+                q.put(nei)
+    return visited
 
 
 def main():
@@ -35,21 +52,18 @@ def main():
     # Input the number of vertices and edges
     numVertices, numEdges = map(int, input().split(" ")) 
 
-    adjlist = {}
+    adjList = {}
     for i in range(numVertices):
-        adjlist[i] = {}
+        adjList[i] = {}
     
     # input the edges
-    for i in range(numEdges):
+    for _ in range(numEdges):
         u, v, w = map(int, input().split(" "))
-        adjlist[u][v] = w
+        adjList[u].append([v, w])
     
     # output the longest path HERE
-
-    #print(longestLength)
-    #print(" ".join(longestPath))
+    findApproxLongestPath(adjList)
 
 
-    pass
 if __name__ == "__main__":
     main()
