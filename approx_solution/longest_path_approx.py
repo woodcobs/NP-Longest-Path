@@ -1,10 +1,13 @@
 """
-Longest Path Problem (Approximation Solution)
+Longest Path Problem (Exact Solution)
 Names: Bradley Woodcock, Dylan Roth
-Date: 4/23/2023
+Date: 10/10/2019
 
 This program will find the longest path in a graph. We will be using a Directed Weighted Graph.
-The input will be the number of vertices, and the edges themselves.
+The input will be the number of vertices, and the edges themselves. This will be a brute-force solution.
+We will find the longest path in the entire graph by finding the longest path from each vertex to every other vertex.
+This will be done by using a backtracking function that will find the longest path from a given vertex to every other vertex.
+We will use itertools to generate all possible permutations of the vertices, and then we will find the longest path from each permutation.
 
 Example Input:
     4 6
@@ -14,89 +17,78 @@ Example Input:
     1 3 100
     3 1 100
     0 1 99
+
+
+    4 6
+0 2 500
+1 0 100
+2 0 100
+1 3 100
+3 1 100
+0 1 99
 """
-import queue
-import random
+import itertools
 
-# Approximation Function for Longest Simple Path in a Directed and Weighted Graph
-def findApproxLongestPath(adjList):
-    paths = []
-    #longestLen = -99999
-    for v in adjList.keys():
-        #visited, pathLength = DFS(adjList, v)
-        #paths.append(visited)
-        paths.append(DFS(adjList, v))
-        #longestLen = max(longestLen, pathLength)
-    longestLen = max([len(p) for p in paths])
-    # longestLen = pathLength
-    longestPath = []
-    for p in paths:
-        if len(p) == longestLen:
-            longestPath = p
-            break
-    print(longestLen)
-    ans = [str(v) for v in longestPath]
-    print(" ".join(ans))
 
-def DFS(adjList, s):
-    visited = []
-    #pathLength = 0
-    q = queue.LifoQueue()
-    q.put(s)
-    while q.empty() != True:
-        v = q.get()
-        if v not in visited:
-            visited.append(v)
-            #pathLength += adjList[v][1]
-            for nei, _ in adjList[v]:
-                q.put(nei)
-    return visited #, pathLength
 
-def approximateLongest(adjList):
-    # Mark vertices visited to ensure a simple path
-    visited = set()
-    # Stack implementation
-    q = queue.LifoQueue()
-    # Choose a vertex near the middle of adjList
-    middle = len(adjList) // 2
-    q.put(middle)
-    longestLen = 0
+def findLongestPath(adjlist):
+        maxLength = 0
+        path = None
 
-    # Run DFS
-    while (q.empty() != True):
-        v = q.get()
-        if v not in visited:
-            visited.add(v)
-            # select arbitrary vertex from edge list WRONG
-            nextV = random.choice(adjList[v])
-            longestLen += nextV[1]
-            q.put(nextV[0])
-    return visited, longestLen
+        # find all permutations of the vertices
+        permutations = itertools.permutations(adjlist.keys())
+
+        # find the longest path from each permutation
+        for permutation in permutations:
+            currLength = 0
+            currPath = []
+            currPath.append(permutation[0])
+            for i in range(len(permutation)-1):
+                if adjlist.get(permutation[i]) and adjlist.get(permutation[i]).get(permutation[i+1]):
+                        currLength += adjlist[permutation[i]][permutation[i+1]]
+                        if currPath[-1] != permutation[i]:
+                            currPath.append(permutation[i])
+                        currPath.append(permutation[i + 1])
+                else:
+                     break
+            if currLength > maxLength:
+                maxLength = currLength
+                path = currPath
+        return maxLength, path
             
 
+def main(numVertices = None, numEdges = None, testEdges = None):
 
-def main():
+    # Input the number of vertices
+    if not (numVertices and numEdges):
+        numVertices, numEdges = map(int, input().split(" ")) 
 
-    # Input the number of vertices and edges
-    numVertices, numEdges = map(int, input().split(" ")) 
+    adjlist = {}
 
-    adjList = {}
     for i in range(numVertices):
-        adjList[i] = []
-    
+        adjlist[str(i)] = {}
+        
     # input the edges
-    for _ in range(numEdges):
-        u, v, w = map(int, input().split(" "))
-        if u not in adjList:
-            adjList[u] = []
-        adjList[u].append([v, w])
-    
-    # output the longest path HERE
-    longestPath, longestLen = approximateLongest(adjList)
+    if not testEdges:
+        for _ in range(numEdges):
+            u, v, w = input().split(" ")
+            w = int(w)
+            adjlist[u][v] = w
+    else:
+        for edge in testEdges:
+            u, v, w = edge
+            adjlist[u][v] = int(w)
 
-    print(longestLen)
-    print(longestPath)
+    print(adjlist)
+    # find the longest path from each vertex to every other vertex
+    longestLength, longestPath = findLongestPath(adjlist)
+    if longestLength and longestPath:
+        print(longestLength)
+        print(" ".join(longestPath))
+    else:
+        print("No path to all vertices found")
 
 
 if __name__ == "__main__":
     main()
+
