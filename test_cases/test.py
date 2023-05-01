@@ -27,7 +27,7 @@ def main():
 
         u = node1
         v = node2
-        w = str(random.randint(-10, 10))
+        w = str(random.randint(1, 10))
         edges.append((u, v, w))
 
 
