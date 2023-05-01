@@ -92,10 +92,16 @@ def main():
             adjList[u] = []
         adjList[u].append([v, w])
     
-    # output the longest path HERE
-    longestPath, longestLen = approximateLongest(adjList)
+    attempts = 100
+    longestLength = 0
+    longestPath = None
+    for _ in range(attempts):
+        currPath, currLength = approximateLongest(adjList)
+        if currLength > longestLength:
+            longestLength = currLength
+            longestPath = currPath
 
-    print(longestLen)
+    print(longestLength)
     print(longestPath)
 
 
