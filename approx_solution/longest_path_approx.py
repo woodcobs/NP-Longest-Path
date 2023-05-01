@@ -8,47 +8,71 @@ The input will be the number of vertices, and the edges themselves.
 
 Example Input:
     4 6
-    a c 500
-    b a 100
-    c a 100
-    b d 100
-    d b 100
-    a b 99
+    0 2 500
+    1 0 100
+    2 0 100
+    1 3 100
+    3 1 100
+    0 1 99
 """
 import queue
+import random
 
 # Approximation Function for Longest Simple Path in a Directed and Weighted Graph
-def findApproxLongestPath(adjList, numVertices):
+def findApproxLongestPath(adjList):
     paths = []
+    #longestLen = -99999
     for v in adjList.keys():
-        currPath, currLength = DFS(adjList, v)
-        paths.append([currPath, currLength])
-    maxLen = -9999999999999
-    maxPath = None
-    for p, l in paths:
-        if len(p) == numVertices and l > maxLen:
-            maxLen = l
-            maxPath = p
+        #visited, pathLength = DFS(adjList, v)
+        #paths.append(visited)
+        paths.append(DFS(adjList, v))
+        #longestLen = max(longestLen, pathLength)
+    longestLen = max([len(p) for p in paths])
+    # longestLen = pathLength
     longestPath = []
-    
-    print(maxLen)
-    print(" ".join(maxPath))
-
+    for p in paths:
+        if len(p) == longestLen:
+            longestPath = p
+            break
+    print(longestLen)
+    ans = [str(v) for v in longestPath]
+    print(" ".join(ans))
 
 def DFS(adjList, s):
     visited = []
-    pathLength = 0
+    #pathLength = 0
     q = queue.LifoQueue()
     q.put(s)
     while q.empty() != True:
         v = q.get()
-        if v not in visited and adjList.get(v):
+        if v not in visited:
             visited.append(v)
-            print(adjList[v])
-            pathLength += int(adjList[v][1])
-            for nei in adjList[v]:
+            #pathLength += adjList[v][1]
+            for nei, _ in adjList[v]:
                 q.put(nei)
-    return visited, pathLength
+    return visited #, pathLength
+
+def approximateLongest(adjList):
+    # Mark vertices visited to ensure a simple path
+    visited = set()
+    # Stack implementation
+    q = queue.LifoQueue()
+    # Choose a vertex near the middle of adjList
+    middle = len(adjList) // 2
+    q.put(middle)
+    longestLen = 0
+
+    # Run DFS
+    while (q.empty() != True):
+        v = q.get()
+        if v not in visited:
+            visited.add(v)
+            # select arbitrary vertex from edge list WRONG
+            nextV = random.choice(adjList[v])
+            longestLen += nextV[1]
+            q.put(nextV[0])
+    return visited, longestLen
+            
 
 
 def main():
@@ -58,16 +82,20 @@ def main():
 
     adjList = {}
     for i in range(numVertices):
-        adjList[str(i)] = {}
+        adjList[i] = []
     
     # input the edges
     for _ in range(numEdges):
         u, v, w = map(int, input().split(" "))
-        u = str(u)
-        adjList[u] = ([str(v), str(w)])
+        if u not in adjList:
+            adjList[u] = []
+        adjList[u].append([v, w])
     
     # output the longest path HERE
-    findApproxLongestPath(adjList, numVertices)
+    longestPath, longestLen = approximateLongest(adjList)
+
+    print(longestLen)
+    print(longestPath)
 
 
 if __name__ == "__main__":
