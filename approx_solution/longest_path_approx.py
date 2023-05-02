@@ -52,57 +52,75 @@ import random
 #                 q.put(nei)
 #     return visited #, pathLength
 
-def approximateLongest(adjList):
-    # Mark vertices visited to ensure a simple path
-    visited = []
-    # Stack implementation
-    q = queue.LifoQueue()
-    # Choose a random vertex
-    # q.put(random.randint(0, len(adjList) - 1))
-    q.put(0)
-    longestLen = 0
 
-    # Run DFS
-    while (q.empty() != True):
-        v = q.get()
-        if v not in visited:
-            visited.append(v)
-            # select arbitrary vertex from edge list
-            if len(adjList[v]) != 0:
-                nextV = random.choice(adjList[v])
-                q.put(nextV[0])
-                longestLen += nextV[1]
-    return visited, longestLen
-            
+def main(numVertices = None, numEdges = None, testEdges = None):
 
+    # Input the number of vertices
+    if not (numVertices and numEdges):
+        numVertices, numEdges = map(int, input().split(" ")) 
 
-def main():
+    adjlist = {}
 
-    # Input the number of vertices and edges
-    numVertices, numEdges = map(int, input().split(" ")) 
-
-    adjList = {}
     for i in range(numVertices):
-        adjList[i] = []
-    
+        adjlist[str(i)] = {}
+        
     # input the edges
-    for _ in range(numEdges):
-        u, v, w = map(int, input().split(" "))
-        if u not in adjList:
-            adjList[u] = []
-        adjList[u].append([v, w])
-    
-    attempts = 100
+    if not testEdges:
+        for _ in range(numEdges):
+            u, v, w = input().split(" ")
+            w = int(w)
+            adjlist[u][v] = w
+    else:
+        for edge in testEdges:
+            u, v, w = edge
+            adjlist[u][v] = int(w)
+
+    print(adjlist)
+    # find the longest path from each vertex to every other vertex
+
+    attempts = 1000
     longestLength = 0
     longestPath = None
     for _ in range(attempts):
-        currPath, currLength = approximateLongest(adjList)
+        currLength, currPath = findLongestPath(adjlist)
         if currLength > longestLength:
             longestLength = currLength
             longestPath = currPath
 
-    print(longestLength)
-    print(longestPath)
+    if longestLength and longestPath:
+        print(longestLength)
+        print(" ".join(longestPath))
+    else:
+        print("No path to all vertices found")
+
+def findLongestPath(adjList):
+    start = random.choice(list(adjList.keys()))
+    path = [start]
+    pathLength = 0
+    curr = start
+
+    visited = set([start])
+    unvisited = set(adjList.keys())
+    unvisited.remove(start)
+
+    while len(unvisited) > 0:
+        maxWeight = -99999
+        maxNeighbor = None
+        for nei, w in adjList[curr].items():
+            if nei not in visited:
+                if w > maxWeight:
+                    maxWeight = w
+                    maxNeighbor = nei
+        if maxNeighbor == None:
+            break
+
+        path.append(maxNeighbor)
+        pathLength += maxWeight
+        visited.add(maxNeighbor)
+        unvisited.remove(maxNeighbor)
+        curr = maxNeighbor
+
+    return pathLength, path
 
 
 if __name__ == "__main__":

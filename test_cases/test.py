@@ -18,16 +18,17 @@ def main():
 
     # generate the edges
     edges = []
+    edgesDict = {}
     for _ in range(numEdges):
-        node1 = str(random.randint(0, numVertices-1))
-        node2 = str(random.randint(0, numVertices-1))
-
-        while node1 == node2:
-            node2 = str(random.randint(1, numVertices-1))
-
-        u = node1
-        v = node2
+        u = str(random.randint(0, numVertices-1))
+        v = str(random.randint(0, numVertices-1))
         w = str(random.randint(1, 10))
+        # make sure node isnt making a loop and that the edge doesnt already exist
+        while (str(u) == str(v)) or ((str(u) + str(v)) in edgesDict):
+            u = str(random.randint(0, numVertices-1))
+            v = str(random.randint(0, numVertices-1))
+        edgesDict[str(u) + str(v)] = True
+        
         edges.append((u, v, w))
 
 
