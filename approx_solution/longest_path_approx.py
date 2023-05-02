@@ -93,17 +93,24 @@ def main(numVertices = None, numEdges = None, testEdges = None):
     else:
         print("No path to all vertices found")
 
+# Approximate Longest Path in a Directed and Weighted Graph using a Greedy Algorithm (Not Optimal)
 def findLongestPath(adjList):
+    # Randomly choose a starting vertex
     start = random.choice(list(adjList.keys()))
+    # Initialize the path with the starting vertex
     path = [start]
+    # Initialize the path length to 0
     pathLength = 0
+    # Initialize the current vertex to the starting vertex
     curr = start
-
+    # Initialize the visited set to the starting vertex
     visited = set([start])
+    # Initialize the unvisited set to all the other vertices
     unvisited = set(adjList.keys())
     unvisited.remove(start)
-
+    # While there are still unvisited vertices
     while len(unvisited) > 0:
+        # Find the neighbor with the largest weight
         maxWeight = -99999
         maxNeighbor = None
         for nei, w in adjList[curr].items():
@@ -111,17 +118,23 @@ def findLongestPath(adjList):
                 if w > maxWeight:
                     maxWeight = w
                     maxNeighbor = nei
+        # If there are no unvisited neighbors, break
         if maxNeighbor == None:
             break
-
+        # Add the neighbor to the path
         path.append(maxNeighbor)
+        # Add the weight of the neighbor to the path length
         pathLength += maxWeight
+        # Add the neighbor to the visited set
         visited.add(maxNeighbor)
+        # Remove the neighbor from the unvisited set
         unvisited.remove(maxNeighbor)
+        # Update the current vertex to the neighbor
         curr = maxNeighbor
-
+    # Return the path length and the path
     return pathLength, path
 
+# def findLongestPath(adjList):
 
 if __name__ == "__main__":
     main()
