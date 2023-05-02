@@ -4,7 +4,7 @@ Names: Bradley Woodcock, Dylan Roth
 Date: 4/23/2023
 
 This program will find the longest path in a graph. We will be using a Directed Weighted Graph.
-The input will be the number of vertices, and the edges themselves.
+The input will be the number of vertices and edges, and the edges themselves.
 
 Example Input:
 4 6
