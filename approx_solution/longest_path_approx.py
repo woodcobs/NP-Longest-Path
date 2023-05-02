@@ -19,31 +19,22 @@ Example Input:
 import random
 
 
-def main(numVertices = None, numEdges = None, testEdges = None):
-
-    # Input the number of vertices
+def main(numVertices = None, numEdges = None):
+    # Input
+    # Get the number of vertices and edges
     if not (numVertices and numEdges):
         numVertices, numEdges = map(int, input().split(" ")) 
 
+    # Create Adjacency List
     adjlist = {}
-
     for i in range(numVertices):
         adjlist[str(i)] = {}
-        
-    # input the edges
-    if not testEdges:
-        for _ in range(numEdges):
-            u, v, w = input().split(" ")
-            w = int(w)
-            adjlist[u][v] = w
-    else:
-        for edge in testEdges:
-            u, v, w = edge
-            adjlist[u][v] = int(w)
+    for _ in range(numEdges):
+        u, v, w = input().split(" ")
+        w = int(w)
+        adjlist[u][v] = w
 
-    print(adjlist)
-    # find the longest path from each vertex to every other vertex
-
+    # Approximate the longest path over X attempts
     attempts = 1000
     longestLength = 0
     longestPath = None
@@ -59,48 +50,48 @@ def main(numVertices = None, numEdges = None, testEdges = None):
     else:
         print("No path to all vertices found")
 
-# Approximate Longest Path in a Directed and Weighted Graph using a Greedy Algorithm (Not Optimal)
+
+# Approximate Longest Path in a weighted Digraph using Greedy Algorithm
 def findLongestPath(adjList):
-    # Randomly choose a starting vertex
+    # Create a path list beginning with random starting vertex
     start = random.choice(list(adjList.keys()))
-    # Initialize the path with the starting vertex
     path = [start]
-    # Initialize the path length to 0
+    # Set initial path length to 0
     pathLength = 0
-    # Initialize the current vertex to the starting vertex
-    curr = start
-    # Initialize the visited set to the starting vertex
+    # Set current vertex to start vertex
+    currV = start
+    # Initialize the visited set with starting vertex
     visited = set([start])
-    # Initialize the unvisited set to all the other vertices
+    # Initialize unvisited set to all vertices but starting vertex
     unvisited = set(adjList.keys())
     unvisited.remove(start)
     # While there are still unvisited vertices
     while len(unvisited) > 0:
-        # Find the neighbor with the largest weight
+        # Greedy choice: the neighbor with the largest weight
         maxWeight = -99999
         maxNeighbor = None
-        for nei, w in adjList[curr].items():
+        for nei, w in adjList[currV].items():
             if nei not in visited:
                 if w > maxWeight:
                     maxWeight = w
                     maxNeighbor = nei
-        # If there are no unvisited neighbors, break
+        # If no more unvisited neighbors, then finish
         if maxNeighbor == None:
             break
-        # Add the neighbor to the path
+        # Add current neighbor to path
         path.append(maxNeighbor)
-        # Add the weight of the neighbor to the path length
+        # Add the weight of current neighbor to the path length
         pathLength += maxWeight
-        # Add the neighbor to the visited set
+        # Mark current neighbor as visited
         visited.add(maxNeighbor)
-        # Remove the neighbor from the unvisited set
+        # Remove current neighbor from unvisited
         unvisited.remove(maxNeighbor)
-        # Update the current vertex to the neighbor
-        curr = maxNeighbor
-    # Return the path length and the path
+        # Update the current vertex to the current max neighbor
+        currV = maxNeighbor
+    
+    # Return the path and its length
     return pathLength, path
 
-# def findLongestPath(adjList):
 
 if __name__ == "__main__":
     main()
