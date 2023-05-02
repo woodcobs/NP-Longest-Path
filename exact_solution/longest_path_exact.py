@@ -79,7 +79,6 @@ def main(numVertices = None, numEdges = None, testEdges = None):
             u, v, w = edge
             adjlist[u][v] = int(w)
 
-    print(adjlist)
     # find the longest path from each vertex to every other vertex
     longestLength, longestPath = findLongestPath(adjlist)
     if longestLength and longestPath:
