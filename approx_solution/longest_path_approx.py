@@ -35,7 +35,7 @@ def main(numVertices = None, numEdges = None):
         adjlist[u][v] = w
 
     # Approximate the longest path over X attempts
-    attempts = 1000
+    attempts = 100000
     longestLength = 0
     longestPath = None
     for _ in range(attempts):

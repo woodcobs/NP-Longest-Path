@@ -28,6 +28,7 @@ Example Input:
 0 1 99
 """
 import itertools
+import time
 
 
 
@@ -45,15 +46,13 @@ def findLongestPath(adjlist):
             currPath.append(permutation[0])
             for i in range(len(permutation)-1):
                 if adjlist.get(permutation[i]) and adjlist.get(permutation[i]).get(permutation[i+1]):
-                        currLength += adjlist[permutation[i]][permutation[i+1]]
-                        if currPath[-1] != permutation[i]:
-                            currPath.append(permutation[i])
+                        currLength += adjlist[permutation[i]][permutation[i+1]]   
                         currPath.append(permutation[i + 1])
                 else:
                      break
             if currLength > maxLength:
                 maxLength = currLength
-                path = currPath
+                path = currPath.copy()
         return maxLength, path
             
 
@@ -80,12 +79,16 @@ def main(numVertices = None, numEdges = None, testEdges = None):
             adjlist[u][v] = int(w)
 
     # find the longest path from each vertex to every other vertex
+    start = time.time()
+   
     longestLength, longestPath = findLongestPath(adjlist)
     if longestLength and longestPath:
         print(longestLength)
         print(" ".join(longestPath))
     else:
         print("No path to all vertices found")
+    end = time.time()
+    #print("Elapsed time with input", numVertices, numEdges, ":", end - start, "seconds")
 
 
 if __name__ == "__main__":
