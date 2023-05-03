@@ -17,7 +17,7 @@ Example Input:
 """
 
 import random
-
+import time
 
 def main(numVertices = None, numEdges = None):
     # Input
@@ -35,7 +35,9 @@ def main(numVertices = None, numEdges = None):
         adjlist[u][v] = w
 
     # Approximate the longest path over X attempts
-    attempts = 100000
+    start = time.time()
+    
+    attempts = 1000
     longestLength = 0
     longestPath = None
     for _ in range(attempts):
@@ -49,7 +51,8 @@ def main(numVertices = None, numEdges = None):
         print(" ".join(longestPath))
     else:
         print("No path to all vertices found")
-
+    end = time.time()
+    #print("Elapsed time with input", numVertices, numEdges, ":", end - start, "seconds")
 
 # Approximate Longest Path in a weighted Digraph using Greedy Algorithm
 def findLongestPath(adjList):
