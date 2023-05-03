@@ -10,22 +10,21 @@ This will be done by using a backtracking function that will find the longest pa
 We will use itertools to generate all possible permutations of the vertices, and then we will find the longest path from each permutation.
 
 Example Input:
-    4 6
-    0 2 500
-    1 0 100
-    2 0 100
-    1 3 100
-    3 1 100
-    0 1 99
-
-
-    4 6
-0 2 500
-1 0 100
-2 0 100
-1 3 100
-3 1 100
-0 1 99
+7 14
+0 1 8
+5 6 3
+5 2 1
+6 0 4
+0 6 3
+5 3 9
+4 0 5
+2 6 4
+6 5 7
+1 6 6
+4 3 9
+3 5 8
+1 2 10
+6 1 5
 """
 import itertools
 import time
