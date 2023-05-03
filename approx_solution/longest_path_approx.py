@@ -7,13 +7,21 @@ This program will find the longest path in a graph. We will be using a Directed 
 The input will be the number of vertices and edges, and the edges themselves.
 
 Example Input:
-4 6
-0 1 500
-1 2 100
-2 3 100
-1 3 100
-0 2 100
-3 0 99
+7 14
+0 1 8
+5 6 3
+5 2 1
+6 0 4
+0 6 3
+5 3 9
+4 0 5
+2 6 4
+6 5 7
+1 6 6
+4 3 9
+3 5 8
+1 2 10
+6 1 5
 """
 
 import random
